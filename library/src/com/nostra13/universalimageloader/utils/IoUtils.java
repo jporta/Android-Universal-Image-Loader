@@ -31,6 +31,8 @@ public final class IoUtils {
 	/** {@value} */
 	public static final int DEFAULT_BUFFER_SIZE = 32 * 1024; // 32 KB
 	/** {@value} */
+	public static final int DEFAULT_IMAGE_TOTAL_SIZE = 500 * 1024; // 500 Kb
+	/** {@value} */
 	public static final int CONTINUE_LOADING_PERCENTAGE = 75;
 
 	private IoUtils() {
@@ -42,7 +44,7 @@ public final class IoUtils {
 	 *
 	 * @param is       Input stream
 	 * @param os       Output stream
-	 * @param listener Listener of copying progress and controller of copying interrupting
+	 * @param listener null-ok; Listener of copying progress and controller of copying interrupting
 	 * @return <b>true</b> - if stream copied successfully; <b>false</b> - if copying was interrupted by listener
 	 * @throws IOException
 	 */
@@ -55,7 +57,7 @@ public final class IoUtils {
 	 *
 	 * @param is         Input stream
 	 * @param os         Output stream
-	 * @param listener   Listener of copying progress and controller of copying interrupting
+	 * @param listener   null-ok; Listener of copying progress and controller of copying interrupting
 	 * @param bufferSize Buffer size for copying, also represents a step for firing progress listener callback, i.e.
 	 *                   progress event will be fired after every copied <b>bufferSize</b> bytes
 	 * @return <b>true</b> - if stream copied successfully; <b>false</b> - if copying was interrupted by listener
@@ -64,7 +66,10 @@ public final class IoUtils {
 	public static boolean copyStream(InputStream is, OutputStream os, CopyListener listener, int bufferSize)
 			throws IOException {
 		int current = 0;
-		final int total = is.available();
+		int total = is.available();
+		if (total <= 0) {
+			total = DEFAULT_IMAGE_TOTAL_SIZE;
+		}
 
 		final byte[] bytes = new byte[bufferSize];
 		int count;
@@ -74,6 +79,7 @@ public final class IoUtils {
 			current += count;
 			if (shouldStopLoading(listener, current, total)) return false;
 		}
+		os.flush();
 		return true;
 	}
 

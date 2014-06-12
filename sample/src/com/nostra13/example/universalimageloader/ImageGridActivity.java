@@ -54,7 +54,7 @@ public class ImageGridActivity extends AbsListViewBaseActivity {
 			.showImageForEmptyUri(R.drawable.ic_empty)
 			.showImageOnFail(R.drawable.ic_error)
 			.cacheInMemory(true)
-			.cacheOnDisc(true)
+			.cacheOnDisk(true)
 			.considerExifParams(true)
 			.bitmapConfig(Bitmap.Config.RGB_565)
 			.build();
@@ -74,6 +74,11 @@ public class ImageGridActivity extends AbsListViewBaseActivity {
 		intent.putExtra(Extra.IMAGES, imageUrls);
 		intent.putExtra(Extra.IMAGE_POSITION, position);
 		startActivity(intent);
+	}
+
+	static class ViewHolder {
+		ImageView imageView;
+		ProgressBar progressBar;
 	}
 
 	public class ImageAdapter extends BaseAdapter {
@@ -134,11 +139,6 @@ public class ImageGridActivity extends AbsListViewBaseActivity {
 			);
 
 			return view;
-		}
-
-		class ViewHolder {
-			ImageView imageView;
-			ProgressBar progressBar;
 		}
 	}
 }

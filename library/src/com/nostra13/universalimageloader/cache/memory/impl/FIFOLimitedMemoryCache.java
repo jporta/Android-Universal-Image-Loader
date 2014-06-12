@@ -34,7 +34,7 @@ import java.util.List;
  * @author Sergey Tarasevich (nostra13[at]gmail[dot]com)
  * @since 1.0.0
  */
-public class FIFOLimitedMemoryCache extends LimitedMemoryCache<String, Bitmap> {
+public class FIFOLimitedMemoryCache extends LimitedMemoryCache {
 
 	private final List<Bitmap> queue = Collections.synchronizedList(new LinkedList<Bitmap>());
 
@@ -53,12 +53,12 @@ public class FIFOLimitedMemoryCache extends LimitedMemoryCache<String, Bitmap> {
 	}
 
 	@Override
-	public void remove(String key) {
+	public Bitmap remove(String key) {
 		Bitmap value = super.get(key);
 		if (value != null) {
 			queue.remove(value);
 		}
-		super.remove(key);
+		return super.remove(key);
 	}
 
 	@Override

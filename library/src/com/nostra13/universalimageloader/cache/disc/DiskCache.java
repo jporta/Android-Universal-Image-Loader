@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2011-2013 Sergey Tarasevich
+ * Copyright 2014 Sergey Tarasevich
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,16 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package com.nostra13.universalimageloader.cache.disc.naming;
+package com.nostra13.universalimageloader.cache.disc;
 
 /**
- * Generates names for files at disk cache
+ * Interface for disk cache
  *
  * @author Sergey Tarasevich (nostra13[at]gmail[dot]com)
- * @since 1.3.1
+ * @since 1.9.2
  */
-public interface FileNameGenerator {
-
-	/** Generates unique file name for image defined by URI */
-	String generate(String imageUri);
+public interface DiskCache extends DiscCacheAware {
 }

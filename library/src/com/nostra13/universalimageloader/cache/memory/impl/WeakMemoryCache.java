@@ -29,7 +29,7 @@ import java.lang.ref.WeakReference;
  * @author Sergey Tarasevich (nostra13[at]gmail[dot]com)
  * @since 1.5.3
  */
-public class WeakMemoryCache extends BaseMemoryCache<String, Bitmap> {
+public class WeakMemoryCache extends BaseMemoryCache {
 	@Override
 	protected Reference<Bitmap> createReference(Bitmap value) {
 		return new WeakReference<Bitmap>(value);
